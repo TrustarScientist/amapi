@@ -34,3 +34,20 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
             **validated_data 
         )
         return user
+    
+
+class UserProfileSerializer(serializers.ModelSerializer):
+    # This field will show the name of the role instead of just the ID
+    role_name = serializers.CharField(source='role.name', read_only=True)
+    
+    class Meta:
+        model = User
+        fields = [
+            'id', 
+            'email', 
+            'username', 
+            'role', 
+            'role_name',
+            # Add other profile fields you want visible on the dashboard (e.g., 'date_joined')
+        ]
+        read_only_fields = ['email', 'username', 'role'] # These fields shouldn't be edited via the profile view

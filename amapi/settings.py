@@ -101,7 +101,12 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         # Ensure only authenticated users can access API endpoints by default
         'rest_framework.permissions.IsAuthenticated',
-    )
+    ),
+    'DEFAULT_PARSER_CLASSES': (
+        'rest_framework.parsers.JSONParser',
+        'rest_framework.parsers.FormParser',
+        'rest_framework.parsers.MultiPartParser', # Crucial for files
+    ),
 }
 
 # Simple JWT Settings (Customize Token Lifespan)
@@ -191,3 +196,10 @@ if 'RENDER' in os.environ:
     
     # Use WhiteNoise's storage backend for compressed and cached static files
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+MEDIA_URL = '/media/'
+
+
