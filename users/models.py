@@ -1,3 +1,4 @@
+# users/models.py 
 
 from django.db import models
 from django.contrib.auth.models import AbstractUser
@@ -23,6 +24,13 @@ class User(AbstractUser):
     phone_number = models.CharField(max_length=20, blank=True, null=True)
     bio = models.TextField(blank=True)
     
+    # NEW FIELD: Wallet balance for buyers
+    wallet_balance = models.DecimalField(
+        max_digits=10, 
+        decimal_places=2, 
+        default=0.00
+    )
+    
     # Use email as the main identifier for the user:
     email = models.EmailField(unique=True, blank=False)
     USERNAME_FIELD = 'email'
@@ -30,3 +38,9 @@ class User(AbstractUser):
 
     def __str__(self):
         return self.email
+    
+    # NEW HELPER PROPERTY: Check if the user is an Admin
+    @property
+    def is_admin(self):
+        # Checks if the user has a role and that role's name is 'Admin' (or 'ADMIN', depending on how you populate it)
+        return self.role is not None and self.role.name.upper() == 'ADMIN'

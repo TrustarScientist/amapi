@@ -81,16 +81,7 @@ WSGI_APPLICATION = 'amapi.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'amapi_db', 
-        'USER': 'postgres', 
-        'PASSWORD': 'Holyman@1996',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
-}
+
 
 # Django REST Framework Settings
 REST_FRAMEWORK = {
@@ -168,7 +159,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 import os
 import dj_database_url
 
-# === Production/Render Configuration ===
+
 if 'RENDER' in os.environ:
     # 1. SECURITY & HOSTS
     DEBUG = False
@@ -196,6 +187,18 @@ if 'RENDER' in os.environ:
     
     # Use WhiteNoise's storage backend for compressed and cached static files
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+else:
+    DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'amapi_db', 
+        'USER': 'postgres', 
+        'PASSWORD': 'Holyman@1996',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }
+}
 
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
